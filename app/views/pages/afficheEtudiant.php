@@ -13,11 +13,28 @@ require_once("../layout/header.php");
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Liste des etudiant</h1>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+          <h1 class="m-0">Liste des étudiants</h1>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-sm-6 ml-auto" style="width: 400px;">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Rechercher">
+            <select class="form-select mr-0" aria-label="Filtre de recherche">
+              <option selected>Filtre...</option>
+              <option value="nom">Matricule</option>
+              <option value="prenom">Nom & Prenom</option>
+              <option value="email"></option>
+            </select>
+            <button class="btn btn-outline-secondary" type="button">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
 
   <section class="content">
     <div class="container-fluid">
@@ -31,8 +48,8 @@ require_once("../layout/header.php");
               <table class="table">
                 <thead>
                   <tr>
-                    <?php 
-                    foreach($allKeyEtudiants as $key){
+                    <?php
+                    foreach ($allKeyEtudiants as $key) {
                       echo "<th scope='col'>$key</th>";
                     }
                     ?>
@@ -40,14 +57,14 @@ require_once("../layout/header.php");
                   </tr>
                 </thead>
                 <tbody>
-                  <?php 
-                  foreach($allEtudiants as $rows){
+                  <?php
+                  foreach ($allEtudiants as $rows) {
                     echo "<tr>";
-                    foreach($rows as $rowElem){
+                    foreach ($rows as $rowElem) {
                       echo "<td scope='col'>$rowElem</td>";
                     }
-                    $btnCol = 
-                    "<td scope='col'>
+                    $btnCol =
+                      "<td scope='col'>
                     <button type='button' class='btn btn-primary btn-md'><i class=\"fas fa-edit\"></i></button>
                     <button type=\"button\" class=\"btn btn-danger btn-md\"><i class=\"fas fa-trash\"></i></button>
                     </td>";
@@ -66,6 +83,6 @@ require_once("../layout/header.php");
     </div>
   </section>
 </div>
-<?php 
+<?php
 require_once("../layout/footer.php");
 ?>

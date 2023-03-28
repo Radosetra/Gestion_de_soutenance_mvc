@@ -13,9 +13,26 @@ require_once("../layout/header.php");
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0">Liste des Professeurs</h1>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-sm-6 ml-auto" style="width: 400px;">
+          <form action="" POST="">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Rechercher">
+              <select class="form-select mr-0" aria-label="Filtre de recherche">
+                <option selected>Filtre...</option>
+                <option value="id_prof">Identifiant</option>
+                <option value="nomComplet">Nom & Prenom(s)</option>
+              </select>
+              <button type="submit" class="btn btn-outline-secondary" type="button">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
   <section class="content">

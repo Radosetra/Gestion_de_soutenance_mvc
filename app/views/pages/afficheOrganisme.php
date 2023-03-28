@@ -12,10 +12,28 @@ require_once("../layout/header.php");
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Liste des Organimes</h1>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+          <h1 class="m-0">Liste des Organismes</h1>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-sm-6 ml-auto" style="width: 400px;">
+          <form action="" POST="">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Rechercher">
+              <select class="form-select mr-0" aria-label="Filtre de recherche">
+                <option selected>Filtre...</option>
+                <option value="id_org">Identifiant</option>
+                <option value="design">Designation</option>
+                <option value="lieu">Lieu</option>
+              </select>
+              <button type="submit" class="btn btn-outline-secondary" type="button">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
   <section class="content">

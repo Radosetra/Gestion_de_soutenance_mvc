@@ -199,6 +199,85 @@ class Soutenir
 
         return $success;
     }
+
+    public static function getSoutenanceByDate($date){
+        $pdo = Database::connect();
+
+        $qry = 
+        "SELECT s.matricule as `matricule`, 
+                e.nom_etudiant as `Nom`, 
+                e.prenom_etudiant as `Prenom`, 
+                o.design as `Organisme`, 
+                s.note as `Note`, 
+                s.annee_univ as `Annee universitaire`, 
+                p1.id_prof as `id_president`,
+                CONCAT(p1.nom_prof, ' ', p1.prenom_prof) AS `President`, 
+                p2.id_prof as `id_examinateur`,
+                CONCAT(p2.nom_prof, ' ', p2.prenom_prof) AS `Examinateur`, 
+                p3.id_prof as `id_rapporteur_int`,
+                CONCAT(p3.nom_prof, ' ', p3.prenom_prof) AS `Rapporteur_Int`, 
+                p4.id_prof as `id_rapporteur_ext`,
+                CONCAT(p4.nom_prof, ' ', p4.prenom_prof) AS `Rapporteur_Ext`
+        FROM soutenir s
+        JOIN organismes o ON s.id_org = o.id_org
+        JOIN etudiants e ON s.matricule = e.matricule
+        JOIN professeurs p1 ON s.president = p1.id_prof
+        JOIN professeurs p2 ON s.examinateur = p2.id_prof
+        JOIN professeurs p3 ON s.rapporteur_int = p3.id_prof
+        JOIN professeurs p4 ON s.rapporteur_ext = p4.id_prof
+        WHERE annee_univ = :param;";
+
+        $preparedQry = $pdo->prepare($qry);
+        $preparedQry->bindParam(':param',$date,PDO::PARAM_STR);
+        $preparedQry->execute();
+
+        $response = $preparedQry->fetchAll();
+
+        Database::disconnect();
+
+        return $response;
+    }
+
+    public static function getSoutenanceByMatricule($matricule){
+        $pdo = Database::connect();
+
+        $qry = 
+        "SELECT s.matricule as `matricule`, 
+                e.nom_etudiant as `Nom`, 
+                e.prenom_etudiant as `Prenom`, 
+                s.id_org as `id_org`,
+                o.design as `Organisme`, 
+                s.note as `Note`, 
+                s.annee_univ as `Annee universitaire`, 
+                p1.id_prof as `id_president`,
+                CONCAT(p1.nom_prof, ' ', p1.prenom_prof) AS `President`, 
+                p2.id_prof as `id_examinateur`,
+                CONCAT(p2.nom_prof, ' ', p2.prenom_prof) AS `Examinateur`, 
+                p3.id_prof as `id_rapporteur_int`,
+                CONCAT(p3.nom_prof, ' ', p3.prenom_prof) AS `Rapporteur_Int`, 
+                p4.id_prof as `id_rapporteur_ext`,
+                CONCAT(p4.nom_prof, ' ', p4.prenom_prof) AS `Rapporteur_Ext`
+        FROM soutenir s
+        JOIN organismes o ON s.id_org = o.id_org
+        JOIN etudiants e ON s.matricule = e.matricule
+        JOIN professeurs p1 ON s.president = p1.id_prof
+        JOIN professeurs p2 ON s.examinateur = p2.id_prof
+        JOIN professeurs p3 ON s.rapporteur_int = p3.id_prof
+        JOIN professeurs p4 ON s.rapporteur_ext = p4.id_prof
+        WHERE s.matricule = :param;";
+
+        $preparedQry = $pdo->prepare($qry);
+
+        $preparedQry->bindParam(':param',$matricule,PDO::PARAM_STR);
+
+        $preparedQry->execute();
+
+        $response = $preparedQry->fetchAll();
+
+        Database::disconnect();
+
+        return $response;
+    }
 }
 
 ?>

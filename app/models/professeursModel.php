@@ -113,7 +113,7 @@ class Professeur {
             prenom_prof = :prenom_prof, 
             civilite = :civilite, 
             grade = :grade
-        WHERE id = :id;";
+        WHERE id_prof = :id;";
 
         $preparedQry = $pdo->prepare($qry);
 
@@ -159,6 +159,37 @@ class Professeur {
         Database::disconnect();
 
         return $success;
+    }
+
+    public static function getProfesseur($data){
+        $pdo = Database::connect();
+
+        // Preparer une interface pour recherche par matricule ou par nom
+        $preparedQry = null;
+        if(isset($data['id_prof'])){
+            $qryByMatricule = 
+            "SELECT * 
+            FROM professeurs 
+            WHERE id_prof = :id_prof AND actif_prof = True";
+
+            $preparedQry = $pdo->prepare($qryByMatricule);
+            $preparedQry->bindParam(':id_prof', $data['id_prof'],PDO::PARAM_STR);
+        } else {
+            $qryByName = 
+            "SELECT * 
+            FROM professeurs 
+            WHERE LOWER(nom_prof) LIKE LOWER(:nom) AND LOWER(prenom_prof) LIKE LOWER(:prenom) AND actif_prof = True;";
+
+            $preparedQry = $pdo->prepare($qryByName);
+            $preparedQry->bindParam(':nom',$data['nom_prof'],PDO::PARAM_STR);
+            $preparedQry->bindParam(':prenom',$data['prenom_prof'],PDO::PARAM_STR);
+        }
+        $preparedQry->execute();
+        $response = $preparedQry->fetch();
+
+        Database::disconnect();
+
+        return $response;
     }
 }
 

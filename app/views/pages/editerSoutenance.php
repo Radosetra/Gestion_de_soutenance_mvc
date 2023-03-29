@@ -5,13 +5,21 @@ require_once("../../config/database.php");
 // <!-- Prerequis
 // * Recuperer tous les professeurs actifs
 require_once("../../models/professeursModel.php");
-require_once("../../functions/soutenanceSelectProf.php");
+require_once("../../functions/soutenanceSelectedProf.php");
 $allActifsProf = Professeur::readAll();
 
+// * Recuperation de la soutenance a modifier
+require_once("../../models/soutenirModel.php");
+$soutenance = null;
+if(isset($_GET['id'])){
+    $matricule = $_GET['id'];
+    $soutenanceTab = Soutenir::getSoutenanceByMatricule($matricule);
+    $soutenance = $soutenanceTab[0];
+}
 
 // * recuperer touts les organismes actifs
 require_once("../../models/organismesModel.php");
-require_once("../../functions/soutenanceSelectOrg.php");
+require_once("../../functions/soutenanceSelectedOrg.php");
 $allActifsOrganisme = Organisme::readAll();
 
 // -->
@@ -23,8 +31,7 @@ require_once("../../functions/isVariableSet.php");
 $isDevine = isVariableSet($_POST,['matricule', 'annee_univ', 'id_org', 'note', 'president', 'examinateur','rapporteur_int','rapporteur_ext']);
 //Traitements
 if($isDevine){
-    $soutenance = new Soutenir($_POST['matricule'], $_POST['annee_univ'], $_POST['id_org'], $_POST['note'], $_POST['president'], $_POST['examinateur'],$_POST['rapporteur_int'],$_POST['rapporteur_int']);
-    if($soutenance->create()){
+    if(Soutenir::update($_POST['matricule'],$_POST)){
         // header('Location: index.php');
         header('Location: /app/views/pages/afficheSoutenance.php');
     }else{
@@ -41,7 +48,7 @@ require_once("../layout/header.php");
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Ajouter une soutenance</h1>
+          <h1 class="m-0">Modification d'une soutenance</h1>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -54,24 +61,24 @@ require_once("../layout/header.php");
           <!-- general form elements -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Quick Example</h3>
+              <h3 class="card-title">Forms</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="ajoutSoutenance.php" method="POST">
+            <form action="editerSoutenance.php" method="POST">
               <div class="card-body">
                 <div class="form-group">
                   <label for="matricule">Matricule</label>
-                  <input type="text" class="form-control" id="matricule" name="matricule" placeholder="Enter matricule de l'etudiant" required>
+                  <input type="text" class="form-control" id="matricule" name="matricule" <?= "value='".$soutenance["matricule"]."'"?> required>
                 </div>
                 <div class="form-group">
                   <label for="annee_univ">Annee universitaire</label>
                   <select class="form-select form-control" name="annee_univ" id="annee_univ" required>
-                    <option value="2021-2022">2021-2022</option>
-                    <option value="2022-2022">2022-2023</option>
-                    <option value="2023-2024">2023-2024</option>
-                    <option value="2024-2025">2024-2025</option>
-                    <option value="2025-2026">2025-2026</option>
+                    <option value="2021-2022" <?= ($soutenance["Annee universitaire"] === '2021-2022')?'selected':''?>>2021-2022</option>
+                    <option value="2022-2022" <?= ($soutenance["Annee universitaire"] === '2022-2023')?'selected':''?>>2022-2023</option>
+                    <option value="2023-2024" <?= ($soutenance["Annee universitaire"] === '2023-2024')?'selected':''?>>2023-2024</option>
+                    <option value="2024-2025" <?= ($soutenance["Annee universitaire"] === '2024-2025')?'selected':''?>>2024-2025</option>
+                    <option value="2025-2026" <?= ($soutenance["Annee universitaire"] === '2025-2026')?'selected':''?>>2025-2026</option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -79,20 +86,20 @@ require_once("../layout/header.php");
                   <select class="form-select form-control" name="id_org" id="id_org" required>
                     <!-- script php pour recuperer tout les organismes -->
                     <?php
-                    soutenanceSelectOrg($allActifsOrganisme);
+                    soutenanceSelectedOrg($allActifsOrganisme,$soutenance['id_org']);
                     ?>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="note">Note</label>
-                  <input type="number" class="form-control" id="note" name="note" step="0.1" required placeholder="Enter la note durant la soutenance">
+                  <input type="number" class="form-control" id="note" name="note" step="0.1" required <?= "value='".$soutenance['Note']."'"?>>
                 </div>
                 <div class="form-group">
                   <label for="president">President du jury</label>
                   <select class="form-select form-control" name="president" id="president" required>
                     <!-- script php pour recuperer tout les profs -->
                     <?php 
-                    soutenanceSelectProf($allActifsProf);
+                    soutenanceSelectedProf($allActifsProf,$soutenance['id_president']);
                     ?>
                   </select>
                 </div>
@@ -101,7 +108,7 @@ require_once("../layout/header.php");
                   <select class="form-select form-control" name="examinateur" id="examinateur" required>
                     <!-- script php pour recuperer tout les profs -->
                     <?php 
-                    soutenanceSelectProf($allActifsProf);
+                    soutenanceSelectedProf($allActifsProf,$soutenance['id_examinateur']);
                     ?>
                   </select>
                 </div>
@@ -110,7 +117,7 @@ require_once("../layout/header.php");
                   <select class="form-select form-control" name="rapporteur_int" id="rapporteur_int" required>
                     <!-- script php pour recuperer tout les profs -->
                     <?php 
-                    soutenanceSelectProf($allActifsProf);
+                    soutenanceSelectedProf($allActifsProf,$soutenance['id_rapporteur_int']);
                     ?>
                   </select>
                 </div>
@@ -119,7 +126,7 @@ require_once("../layout/header.php");
                   <select class="form-select form-control" name="rapporteur_ext" id="rapporteur_ext" required>
                     <!-- script php pour recuperer tout les profs -->
                     <?php 
-                    soutenanceSelectProf($allActifsProf);
+                    soutenanceSelectedProf($allActifsProf,$soutenance['id_rapporteur_ext']);
                     ?>
                   </select>
                 </div>
@@ -127,7 +134,7 @@ require_once("../layout/header.php");
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Modifier</button>
               </div>
             </form>
           </div>

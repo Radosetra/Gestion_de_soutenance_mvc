@@ -24,6 +24,7 @@ require_once("../layout/header.php");
               <select class="form-select mr-0" aria-label="Filtre de recherche">
                 <option selected>Filtre...</option>
                 <option value="annee_univ">Date</option>
+                <option value="matricule">Matricule</option>
               </select>
               <button type="submit" class="btn btn-outline-secondary" type="button">
                 <i class="fas fa-search"></i>
@@ -64,9 +65,9 @@ require_once("../layout/header.php");
                       echo "<td scope='col'>$rowElem</td>";
                     }
                     $btnCol =
-                      "<td scope='col'>
-                    <button type='button' class='btn btn-primary btn-md'><i class=\"fas fa-edit\"></i></button>
-                    <button type=\"button\" class=\"btn btn-danger btn-md\"><i class=\"fas fa-trash\"></i></button>
+                    "<td scope='col'>
+                    <button type='button' class='btn btn-primary btn-md editBtn' data-num=\"" . $rows['Matricule'] . "\"><i class=\"fas fa-edit\"></i></button>
+                    <button type=\"button\" class=\"btn btn-danger btn-md deleteBtn\" data-num=\"" . $rows['Matricule'] . "\"><i class=\"fas fa-trash\"></i></button>
                     </td>";
                     echo $btnCol;
                     echo "</tr>";

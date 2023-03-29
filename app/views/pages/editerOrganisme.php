@@ -2,13 +2,19 @@
 require_once("../../models/organismesModel.php");
 require_once("../../config/database.php");
 
+// Premiere redirection || afficher du formulaire
+if (isset($_GET['id'])) {
+    $data['id_org'] = $_GET['id'];
+    $organisme = Organisme::getOrganisme($data);
+    
+} 
+
 // Verifier si la variable post est definit
 require_once("../../functions/isVariableSet.php");
 $isDevine = isVariableSet($_POST,['id_org', 'design', 'lieu']);
 //Traitements
 if($isDevine){
-    $organisme = new Organisme($_POST['id_org'], $_POST['design'], $_POST['lieu'], true);
-    if($organisme->create()){
+    if(Organisme::update($_POST['id_org'],$_POST)){
         // header('Location: index.php');
         // Note : fonction header dois etre appeler avant d'ecrire du html
         header('Location: /app/views/pages/afficheOrganisme.php');
@@ -43,19 +49,19 @@ require_once("../layout/header.php");
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="ajoutOrganisme.php" method="POST">
+            <form action="editerOrganisme.php" method="POST">
               <div class="card-body">
                 <div class="form-group">
                   <label for="id_org">Identifiant</label>
-                  <input type="number" class="form-control" id="id_org" name="id_org" placeholder="Enter identifiant" required>
+                  <input type="number" class="form-control" id="id_org" name="id_org" <?= "value = '".$organisme['id_org']."'"?> readonly>
                 </div>
                 <div class="form-group">
                   <label for="design">Designation</label>
-                  <input type="text" class="form-control" id="design" name="design" required placeholder="Enter Designation">
+                  <input type="text" class="form-control" id="design" name="design" required <?= "value = '".$organisme['design']."'"?>>
                 </div>
                 <div class="form-group">
                   <label for="lieu">Lieu</label>
-                  <input type="text" class="form-control" id="lieu" name="lieu" required placeholder="Enter l'emplacement de l'organisme">
+                  <input type="text" class="form-control" id="lieu" name="lieu" required <?= "value = '".$organisme['lieu']."'"?>>
                 </div>
 
               </div>

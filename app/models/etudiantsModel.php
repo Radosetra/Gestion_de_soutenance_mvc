@@ -88,6 +88,7 @@ class Etudiant {
         $preparedQry->bindParam(':actif',$this->actif,PDO::PARAM_BOOL);
 
         $success = true;
+
         try{
             $preparedQry->execute();
         } catch (PDOException $e){
@@ -124,7 +125,7 @@ class Etudiant {
         niveau = :niveau, 
         parcours = :parcours, 
         adr_email = :adr_email
-        WHERE id = :id;";
+        WHERE matricule = :id;";
 
         $preparedQry = $pdo->prepare($qry);
 

@@ -34,13 +34,13 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <span href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
                   Etudiants
                   <i class="fas fa-angle-left right"></i>
                 </p>
-              </a>
+              </span>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="app/views/pages/ajoutEtudiant.php" class="nav-link">
@@ -101,7 +101,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="app/views/pages/ajoutOrganisme.php" class="nav-link">
+                  <a href="app/views/pages/afficheOrganisme.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Afficher</p>
                   </a>
@@ -118,13 +118,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="app/views/pages/ajoutSoutenir.php" class="nav-link">
+                  <a href="app/views/pages/ajoutSoutenance.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Ajouter</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="app/views/pages/ajoutSoutenir.php" class="nav-link">
+                  <a href="app/views/pages/afficheSoutenance.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Afficher</p>
                   </a>

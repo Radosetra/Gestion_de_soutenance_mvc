@@ -63,9 +63,9 @@ require_once("../layout/header.php");
                       echo "<td scope='col'>$rowElem</td>";
                     }
                     $btnCol =
-                      "<td scope='col'>
-                    <button type='button' class='btn btn-primary btn-md'><i class=\"fas fa-edit\"></i></button>
-                    <button type=\"button\" class=\"btn btn-danger btn-md\"><i class=\"fas fa-trash\"></i></button>
+                    "<td scope='col'>
+                    <button type='button' class='btn btn-primary btn-md editBtn' data-num=\"" . $rows['Identifiant'] . "\"><i class=\"fas fa-edit\"></i></button>
+                    <button type=\"button\" class=\"btn btn-danger btn-md deleteBtn\" data-num=\"" . $rows['Identifiant'] . "\"><i class=\"fas fa-trash\"></i></button>
                     </td>";
                     echo $btnCol;
                     echo "</tr>";

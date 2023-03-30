@@ -2,8 +2,21 @@
 require_once("../../models/etudiantsModel.php");
 require_once("../../config/database.php");
 
-$allEtudiants = Etudiant::readAll();
-$allKeyEtudiants = array_keys($allEtudiants[0]);
+$allEtudiants = null;
+$allKeyEtudiants = null;
+if(isset($_GET['searchEngine'])){
+  // $allEtudiants = array(Etudiant::searchEngine($_GET['searchEngine']));
+  $allEtudiants = Etudiant::searchEngine($_GET['searchEngine']);
+  if(!empty($allEtudiants)){
+    $allKeyEtudiants = array_keys($allEtudiants[0]);
+  }
+} else if (isset($_GET['filtre'])){
+
+} else {
+  $allEtudiants = Etudiant::readAll();
+  $allKeyEtudiants = array_keys($allEtudiants[0]);
+}
+
 require_once("../layout/header.php");
 ?>
 
@@ -18,18 +31,20 @@ require_once("../layout/header.php");
       </div>
       <div class="row mb-2">
         <div class="col-sm-6 ml-auto" style="width: 400px;">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Rechercher">
-            <select class="form-select mr-0" aria-label="Filtre de recherche">
-              <option selected>Filtre...</option>
-              <option value="nom">Matricule</option>
-              <option value="prenom">Nom & Prenom</option>
-              <option value="email"></option>
-            </select>
-            <button class="btn btn-outline-secondary" type="button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
+          <form action="afficheEtudiant.php" method="GET">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Rechercher par matricule ou par nom" name="searchEngine">
+              <!-- <select class="form-select mr-0" aria-label="Filtre de recherche">
+                <option selected>Filtre...</option>
+                <option value="nom">Matricule</option>
+                <option value="prenom">Nom & Prenom</option>
+                <option value="email"></option>
+              </select> -->
+              <button class="btn btn-outline-secondary" type="submit" >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -46,6 +61,9 @@ require_once("../layout/header.php");
 
             <div class="card-body">
               <table class="table">
+                <?php 
+                if (!empty($allEtudiants)):
+                ?>
                 <thead>
                   <tr>
                     <?php
@@ -72,6 +90,13 @@ require_once("../layout/header.php");
                     echo "</tr>";
                   }
                   ?>
+                <?php 
+                else:
+                ?>
+                <h1>Aucun resultat</h1>
+                <?php 
+                endif;
+                ?>
                 </tbody>
               </table>
             </div>

@@ -44,9 +44,9 @@ require_once("../layout/header.php");
           <!-- general form elements -->
           <div class="card">
 
-            <div class="card-body">
+            <!-- <div class="card-body"> -->
               <div class="table-responsive">
-              <table class="table">
+              <table class="table ">
                 <thead>
                   <tr>
                     <?php
@@ -77,7 +77,7 @@ require_once("../layout/header.php");
               </table>
               </div>
               
-            </div>
+            <!-- </div> -->
 
           </div>
           <!-- !general element -->

@@ -208,6 +208,47 @@ class Etudiant {
     public static function listByNiveau(){
         
     }
+    // QUESTION 2:
+    // public static function searchEngine($data){
+    //     $pdo = Database::connect();
+    //     $searchString = '%' . $data . '%';
+    //     $request = 
+    //     "SELECT matricule, nom_etudiant as Nom, prenom_etudiant as Prenom, niveau, parcours, adr_email as Email
+    //      FROM etudiants WHERE (matricule LIKE ? OR nom_etudiant LIKE ?) AND actif = True";
+    //     $prepared_stmnt = $pdo->prepare($request);
+    //     $prepared_stmnt->bindParam(1,$searchString);
+    //     $prepared_stmnt->bindParam(2,$searchString);
+    //     $prepared_stmnt->execute();
+
+    //     $result = $prepared_stmnt->fetch(PDO::FETCH_ASSOC);
+
+    //     Database::disconnect();
+
+    //     return $result;
+    // }
+
+    public static function searchEngine($data){
+        $pdo = Database::connect();
+        $searchString = '%' . $data . '%';
+        $request = 
+        "SELECT matricule, nom_etudiant as Nom, prenom_etudiant as Prenom, niveau, parcours, adr_email as Email
+         FROM etudiants WHERE (matricule LIKE ? OR nom_etudiant LIKE ?) AND actif = True";
+        $prepared_stmnt = $pdo->prepare($request);
+        $prepared_stmnt->bindParam(1,$data);
+        $prepared_stmnt->bindParam(2,$searchString);
+        $prepared_stmnt->execute();
+
+        $allEtudiants = array();
+
+        while ($result = $prepared_stmnt->fetch(PDO::FETCH_ASSOC)) {
+            $allEtudiants[] = $result;
+        }
+
+        Database::disconnect();
+
+        return $allEtudiants;
+}
+
 }
 
 ?>

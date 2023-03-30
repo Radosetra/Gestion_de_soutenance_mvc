@@ -52,7 +52,7 @@ deleteButtons.forEach(button => {
         .catch(error => {
             console.error('Erreur :', error);
         }) 
-        // location.reload();
+        location.reload();
         alert("L'élément a été supprimé avec succès !");
 
     } else {

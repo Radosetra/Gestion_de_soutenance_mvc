@@ -1,8 +1,10 @@
 <?php
 require_once("../../models/organismesModel.php");
-require_once("../../config/database.php");
+require_once("../../connect_database/database.php");
 $allOrganisme = Organisme::readAll();
-$allKeyOrganismes = array_keys($allOrganisme[0]);
+if(!empty($allOrganisme)){
+  $allKeyOrganismes = array_keys($allOrganisme[0]);
+}
 require_once("../layout/header.php");
 ?>
 
@@ -13,24 +15,6 @@ require_once("../layout/header.php");
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0">Liste des Organismes</h1>
-        </div>
-      </div>
-      <div class="row mb-2">
-        <div class="col-sm-6 ml-auto" style="width: 400px;">
-          <form action="" POST="">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Rechercher">
-              <select class="form-select mr-0" aria-label="Filtre de recherche">
-                <option selected>Filtre...</option>
-                <option value="id_org">Identifiant</option>
-                <option value="design">Designation</option>
-                <option value="lieu">Lieu</option>
-              </select>
-              <button type="submit" class="btn btn-outline-secondary" type="button">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
@@ -44,9 +28,12 @@ require_once("../layout/header.php");
           <!-- general form elements -->
           <div class="card">
 
-            <div class="card-body">
-              <table class="table">
-                <thead>
+          <div class="table-responsive">
+              <table class="table table-striped table-hover">
+              <?php 
+              if(!empty($allOrganisme)):
+              ?>
+                <thead class="thead-dark">
                   <tr>
                     <?php
                     foreach ($allKeyOrganismes as $key) {
@@ -65,13 +52,20 @@ require_once("../layout/header.php");
                     }
                     $btnCol =
                     "<td scope='col'>
-                    <button type='button' class='btn btn-primary btn-md editBtn' data-num=\"" . $rows['Identifiant'] . "\"><i class=\"fas fa-edit\"></i></button>
-                    <button type=\"button\" class=\"btn btn-danger btn-md deleteBtn\" data-num=\"" . $rows['Identifiant'] . "\"><i class=\"fas fa-trash\"></i></button>
+                    <button type='button' class='btn btn-primary btn-md editBtn' data-num=\"" . $rows['Identifiant'] . "\"><i class=\"fas fa-edit\" data-num=\"" . $rows['Identifiant'] . "\"></i></button>
+                    <button type=\"button\" class=\"btn btn-danger btn-md deleteBtn\" data-num=\"" . $rows['Identifiant'] . "\"><i class=\"fas fa-trash\" data-num=\"" . $rows['Identifiant'] . "\"></i></button>
                     </td>";
                     echo $btnCol;
                     echo "</tr>";
                   }
                   ?>
+                <?php 
+                else:
+                ?>
+                <h1 style="color:'red';text-align:center;">Aucun resultat</h1>
+                <?php 
+                endif;
+                ?>
                 </tbody>
               </table>
             </div>

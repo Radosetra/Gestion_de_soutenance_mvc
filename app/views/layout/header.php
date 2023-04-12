@@ -1,15 +1,11 @@
-<?php
-// require_once("../../config/database.php");
-// require_once("../../functions/isVariableSet.php");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>e-project</title>
+    <link rel="shortcut icon" href="../ressources/images/logoENI.png" />
+    <title>Gestion des soutenances</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../../public/assets/plugins/fontawesome-free/css/all.min.css">
@@ -19,15 +15,15 @@
     <link rel="stylesheet" href="../../../public/assets/dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="../../../public/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- script pour update -->
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
+<body class="hold-transition sidebar-mini layout-fixed" style="overflow-x: hidden;">
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="../../../index.php" class="brand-link">
                 <span class="brand-text font-weight-light">Gestion Soutenance</span>
             </a>
 
@@ -39,13 +35,13 @@
                         <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <span class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Etudiants
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
-                        </span>
+                            </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="../pages/ajoutEtudiant.php" class="nav-link">
@@ -57,12 +53,6 @@
                                     <a href="../pages/afficheEtudiant.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Afficher</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Rechercher</p>
                                     </a>
                                 </li>
                             </ul>
@@ -143,5 +133,3 @@
             <!-- /.sidebar -->
 
         </aside>
-
-        <!-- ao arina  -->

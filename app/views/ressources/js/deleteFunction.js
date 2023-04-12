@@ -52,9 +52,8 @@ deleteButtons.forEach(button => {
         .catch(error => {
             console.error('Erreur :', error);
         }) 
-        location.reload();
         alert("L'élément a été supprimé avec succès !");
-
+        location.reload();
     } else {
         // Annuler l'action de suppression
         alert("Suppression annulée !");

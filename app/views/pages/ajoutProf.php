@@ -1,7 +1,7 @@
 <?php 
 require_once("../../models/professeursModel.php");
 // Connexion base de donnee
-require_once("../../config/database.php");
+require_once("../../connect_database/database.php");
 
 // Verifier si la variable post est definit
 require_once("../../functions/isVariableSet.php");
@@ -26,7 +26,7 @@ require_once("../layout/header.php");
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Ajouter un Professeur</h1>
+                    <h1 class="m-0"></h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -37,9 +37,9 @@ require_once("../layout/header.php");
             <div class="row">
                 <div class="col">
                     <!-- general form elements -->
-                    <div class="card card-primary">
+                    <div class="card card-dark">
                         <div class="card-header">
-                            <h3 class="card-title">Quick Example</h3>
+                            <h3 class="card-title">Ajouter un Professeur</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -73,7 +73,7 @@ require_once("../layout/header.php");
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-dark">Ajouter</button>
                             </div>
                         </form>
                     </div>

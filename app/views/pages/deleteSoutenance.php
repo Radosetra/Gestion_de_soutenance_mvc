@@ -1,6 +1,6 @@
 <?php
 require_once("../../models/soutenirModel.php");
-require_once("../../config/database.php");
+require_once("../../connect_database/database.php");
 if(isset($_POST['id'])){
     $matricule = strval($_POST['id']);
     
@@ -8,3 +8,4 @@ if(isset($_POST['id'])){
         die("Erreur suppression");
     }
 }
+?>

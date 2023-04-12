@@ -18,19 +18,21 @@ editBtns.forEach(button => {
         //Determiner a quelle page renvoyer
         let destinationURL;
 
-        if(pageUrl.includes('afficheEtudiant.php')){
+        if(pageUrl[pageUrl.length-1].split('?')[0] === 'afficheEtudiant.php'){
             destinationURL = './editerEtudiant.php'; 
-        }else if(pageUrl.includes('afficheProf.php')){
+        } else if(pageUrl[pageUrl.length-1].split('?')[0] === 'afficheProf.php'){
             destinationURL = './editerProf.php'; 
-        }else if(pageUrl.includes('afficheOrganisme.php')){
+        } else if(pageUrl[pageUrl.length-1].split('?')[0] === 'afficheOrganisme.php'){
             destinationURL = './editerOrganisme.php'; 
-        }else if(pageUrl.includes('afficheSoutenance.php')){
+        } else if(pageUrl[pageUrl.length-1].split('?')[0] === 'afficheSoutenance.php'){
             destinationURL = './editerSoutenance.php'; 
         }
+        
         // console.log(tab);
         window.location.href = destinationURL+"?id="+id;
     })
 })
+
 
   
 

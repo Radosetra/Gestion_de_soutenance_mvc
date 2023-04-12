@@ -1,6 +1,6 @@
 <?php
 // Connexion base de donnee
-require_once("../../config/database.php");
+require_once("../../connect_database/database.php");
 
 // <!-- Prerequis
 // * Recuperer tous les professeurs actifs
@@ -48,7 +48,7 @@ require_once("../layout/header.php");
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Modification d'une soutenance</h1>
+          <h1 class="m-0"></h1>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -59,9 +59,9 @@ require_once("../layout/header.php");
       <div class="row">
         <div class="col">
           <!-- general form elements -->
-          <div class="card card-primary">
+          <div class="card card-dark">
             <div class="card-header">
-              <h3 class="card-title">Forms</h3>
+              <h3 class="card-title">Modifier les informations d'une soutenance</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -75,7 +75,7 @@ require_once("../layout/header.php");
                   <label for="annee_univ">Annee universitaire</label>
                   <select class="form-select form-control" name="annee_univ" id="annee_univ" required>
                     <option value="2021-2022" <?= ($soutenance["Annee universitaire"] === '2021-2022')?'selected':''?>>2021-2022</option>
-                    <option value="2022-2022" <?= ($soutenance["Annee universitaire"] === '2022-2023')?'selected':''?>>2022-2023</option>
+                    <option value="2022-2023" <?= ($soutenance["Annee universitaire"] === '2022-2023')?'selected':''?>>2022-2023</option>
                     <option value="2023-2024" <?= ($soutenance["Annee universitaire"] === '2023-2024')?'selected':''?>>2023-2024</option>
                     <option value="2024-2025" <?= ($soutenance["Annee universitaire"] === '2024-2025')?'selected':''?>>2024-2025</option>
                     <option value="2025-2026" <?= ($soutenance["Annee universitaire"] === '2025-2026')?'selected':''?>>2025-2026</option>
@@ -92,7 +92,7 @@ require_once("../layout/header.php");
                 </div>
                 <div class="form-group">
                   <label for="note">Note</label>
-                  <input type="number" class="form-control" id="note" name="note" step="0.1" required <?= "value='".$soutenance['Note']."'"?>>
+                  <input type="number" class="form-control" id="note" name="note" step="0.25" min="0" max="20" required <?= "value='".$soutenance['Note']."'"?>>
                 </div>
                 <div class="form-group">
                   <label for="president">President du jury</label>
@@ -134,7 +134,7 @@ require_once("../layout/header.php");
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Modifier</button>
+                <button type="submit" class="btn btn-dark">Modifier</button>
               </div>
             </form>
           </div>

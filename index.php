@@ -1,10 +1,54 @@
+<?php
+require_once("app/functions/isVariableSet.php");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$isDevine = isVariableSet($_POST,['database_name']);
+//Traitements
+if($isDevine){
+  $database_name = $_POST['database_name'];
+  try {
+    $conn = new PDO("mysql:host=$servername", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "CREATE DATABASE " . $database_name . " ; USE " . $database_name . " ; CREATE TABLE etudiants ( matricule varchar(20) PRIMARY KEY, nom_etudiant varchar(50) NOT NULL, prenom_etudiant varchar(50) NOT NULL, niveau varchar(5) NOT NULL, parcours varchar(5) NOT NULL, adr_email varchar(50) NOT NULL, actif TINYINT NOT NULL DEFAULT \"1\"  );
+    CREATE TABLE professeurs ( id_prof varchar(20) PRIMARY KEY , nom_prof varchar(50) NOT NULL, prenom_prof varchar(50) NOT NULL, civilite varchar(5) NOT NULL, grade varchar(50) NOT NULL, actif_prof TINYINT NOT NULL DEFAULT \"1\" );
+    CREATE TABLE organismes ( id_org int PRIMARY KEY AUTO_INCREMENT, design varchar(50) NOT NULL, lieu varchar(50) NOT NULL, actif_org TINYINT NOT NULL DEFAULT \"1\" );CREATE TABLE soutenir(
+      matricule VARCHAR(10),
+      annee_univ VARCHAR(20),
+      id_org INT,
+      note FLOAT,
+      president varchar(20) NOT NULL,
+      examinateur varchar(20) NOT NULL,
+      rapporteur_int varchar(20) NOT NULL,
+      rapporteur_ext varchar(20) NOT NULL,
+      PRIMARY KEY(matricule,annee_univ,id_org),
+      FOREIGN KEY(president) REFERENCES professeurs(id_prof),
+      FOREIGN KEY(examinateur) REFERENCES professeurs(id_prof), 
+      FOREIGN KEY(rapporteur_int) REFERENCES professeurs(id_prof), 
+      FOREIGN KEY(rapporteur_ext) REFERENCES professeurs(id_prof),
+      FOREIGN KEY(matricule) REFERENCES etudiants(matricule),
+      FOREIGN KEY(id_org) REFERENCES organismes(id_org)
+  );
+  ";
+    $conn->exec($sql);
+    echo "Database created successfully<br>";
+    header('Location: /gestion_de_soutenance/app/views/pages/ajoutEtudiant.php');
+  } catch(PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+  }
+}
+$conn = null;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>e-project</title>
+  <link rel="shortcut icon" href="app/views/ressources/images/logoENI.png" />
+  <title>Gestion des soutenances</title>
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="public/assets/plugins/fontawesome-free/css/all.min.css">
@@ -22,8 +66,8 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
-        <span class="brand-text font-weight-light">Gestion Soutenance</span>
+      <a href="index.php" class="brand-link">
+        <span class="brand-text font-weight-light">Gestion de Soutenance</span>
       </a>
 
       <!-- Sidebar -->
@@ -34,13 +78,13 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <span href="#" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
                   Etudiants
                   <i class="fas fa-angle-left right"></i>
                 </p>
-              </span>
+              </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="app/views/pages/ajoutEtudiant.php" class="nav-link">
@@ -52,12 +96,6 @@
                   <a href="app/views/pages/afficheEtudiant.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Afficher</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Rechercher</p>
                   </a>
                 </li>
               </ul>
@@ -147,7 +185,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Dashboard</h1>
+              <h1 class="m-0">GESTION DE SOUTENANCE</h1>
             </div><!-- /.col -->
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -159,7 +197,19 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col">
-              <p>Bienvenu sur notre super application</p>
+              <h4>Bienvenu sur l'application de GESTION DE SOUTENANCE</h4><br>
+              <div class="">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                  <div class="container-fluid">
+                    <div class="row mb-2">
+                      <div class="col-sm-6">
+                        <h1 class="m-0"></h1>
+                      </div><!-- /.col -->
+                    </div><!-- /.row -->
+                  </div><!-- /.container-fluid -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -169,11 +219,8 @@
     </div>
 
     <footer class="main-footer">
-      <strong>Copyright &copy; 2023 <a href="#">Gestion de soutenance</a>.</strong>
+      <strong>Copyright &copy; mars 2023 <a href="#">Gestion de soutenance</a>.</strong>
       All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.2.0
-      </div>
     </footer>
 
     <!-- Control Sidebar -->

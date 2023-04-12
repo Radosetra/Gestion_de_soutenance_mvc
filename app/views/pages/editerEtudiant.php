@@ -1,6 +1,6 @@
 <?php
 require_once("../../models/etudiantsModel.php");
-require_once("../../config/database.php");
+require_once("../../connect_database/database.php");
 require_once("../../functions/isVariableSet.php");
 
 // Premiere redirection || afficher du formulaire
@@ -32,7 +32,7 @@ require_once("../layout/header.php");
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Modifier les informations pour un etudiant </h1>
+          <h1 class="m-0"></h1>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -45,9 +45,9 @@ require_once("../layout/header.php");
           <div class="card card-body">
 
             <!-- general form elements -->
-            <div class="card card-primary">
+            <div class="card card-dark">
               <div class="card-header">
-                <h3 class="card-title">Modification</h3>
+                <h3 class="card-title">Modifier les informations d'un étudiant</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -91,7 +91,7 @@ require_once("../layout/header.php");
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Modifier</button>
+                  <button type="submit" class="btn btn-dark">Modifier</button>
                 </div>
               </form>
             </div>

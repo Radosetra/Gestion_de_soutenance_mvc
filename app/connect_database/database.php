@@ -2,7 +2,6 @@
 class Database {
 
     // static est un mot-clé qui signifie que la propriété ou la méthode appartient à la classe elle-même, plutôt qu'à une instance spécifique de la classe. Les propriétés et les méthodes static peuvent être appelées directement depuis la classe, sans avoir besoin de créer une instance.
-
     private static $host = 'localhost';
     private static $dataBaseName = 'test_soutenance';
     private static $user = 'root';
@@ -10,7 +9,7 @@ class Database {
 
     // Instance PDO
     private static $pdo;
-
+    
     // Options de connexion à la base de données
     private static $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Activer le mode exception pour la gestion d'erreurs
@@ -36,14 +35,4 @@ class Database {
     public static function disconnect(){
         self::$pdo = null;
     }
-
-    // C'est avec la variable $pdo que nous ferons nos requetes 
-    // $pdo = Database::connect();
-
-    // Requête de lecture
-    // $query = $pdo->prepare("SELECT * FROM ETUDIANT");
-    // $query->execute();
-    // Fermeture de la connexion à la base de données
-    // Database::disconnect();  
-
 }

@@ -152,8 +152,6 @@ class Etudiant {
 
     public static function delete($matricule){
         $pdo = Database::connect();
-
-        // $qry = "DELETE FROM `etudiants` WHERE matricule = :matricule;";
         $qry = "UPDATE `etudiants` SET actif = False WHERE matricule = :matricule;";
 
         $preparedQry = $pdo->prepare($qry);
@@ -204,29 +202,6 @@ class Etudiant {
         return $response;
     }
 
-    // question 3: afficher la liste des étudiants inscrits par niveau avec l’effectif total
-    public static function listByNiveau(){
-        
-    }
-    // QUESTION 2:
-    // public static function searchEngine($data){
-    //     $pdo = Database::connect();
-    //     $searchString = '%' . $data . '%';
-    //     $request = 
-    //     "SELECT matricule, nom_etudiant as Nom, prenom_etudiant as Prenom, niveau, parcours, adr_email as Email
-    //      FROM etudiants WHERE (matricule LIKE ? OR nom_etudiant LIKE ?) AND actif = True";
-    //     $prepared_stmnt = $pdo->prepare($request);
-    //     $prepared_stmnt->bindParam(1,$searchString);
-    //     $prepared_stmnt->bindParam(2,$searchString);
-    //     $prepared_stmnt->execute();
-
-    //     $result = $prepared_stmnt->fetch(PDO::FETCH_ASSOC);
-
-    //     Database::disconnect();
-
-    //     return $result;
-    // }
-
     public static function searchEngine($data){
         $pdo = Database::connect();
         $searchString = '%' . $data . '%';
@@ -249,6 +224,24 @@ class Etudiant {
         return $allEtudiants;
 }
 
+        public static function filtre($data){
+            $pdo = Database::connect();
+            ($data==1)?($request ="SELECT matricule, nom_etudiant as Nom, prenom_etudiant as Prenom, niveau, parcours, adr_email as Email
+            FROM etudiants WHERE ? AND actif = True"):($request = "SELECT matricule, nom_etudiant as Nom, prenom_etudiant as Prenom, niveau, parcours, adr_email as Email
+            FROM etudiants WHERE niveau = ? AND actif = True");
+            $prepared_stmnt = $pdo->prepare($request);
+            $prepared_stmnt->bindParam(1,$data);
+            $prepared_stmnt->execute();
+            $allEtudiants = array();
+
+            while ($result = $prepared_stmnt->fetch(PDO::FETCH_ASSOC)) {
+                $allEtudiants[] = $result;
+            }
+
+            Database::disconnect();
+
+            return $allEtudiants;
+        }
 }
 
 ?>

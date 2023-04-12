@@ -1,6 +1,6 @@
 <?php
 // Connexion base de donnee
-require_once("../../config/database.php");
+require_once("../../connect_database/database.php");
 
 // <!-- Prerequis
 // * Recuperer tous les professeurs actifs
@@ -14,9 +14,10 @@ require_once("../../models/organismesModel.php");
 require_once("../../functions/soutenanceSelectOrg.php");
 $allActifsOrganisme = Organisme::readAll();
 
+require_once("../../models/soutenirModel.php");
+$allMatricule = Soutenir::allMatricule();
 // -->
 
-require_once("../../models/soutenirModel.php");
 
 // Verifier si la variable post est definit
 require_once("../../functions/isVariableSet.php");
@@ -41,7 +42,7 @@ require_once("../layout/header.php");
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Ajouter une soutenance</h1>
+          <h1 class="m-0"></h1>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -52,23 +53,27 @@ require_once("../layout/header.php");
       <div class="row">
         <div class="col">
           <!-- general form elements -->
-          <div class="card card-primary">
+          <div class="card card-dark">
             <div class="card-header">
-              <h3 class="card-title">Quick Example</h3>
+              <h3 class="card-title">Ajouter une soutenance</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
             <form action="ajoutSoutenance.php" method="POST">
               <div class="card-body">
                 <div class="form-group">
-                  <label for="matricule">Matricule</label>
-                  <input type="text" class="form-control" id="matricule" name="matricule" placeholder="Enter matricule de l'etudiant" required>
+                <label for="matricule">Matricule</label>
+                  <select class="form-select form-control" name="matricule" id="matricule" required>
+                    <?php foreach($allMatricule as $row) : ?>
+                      <option value="<?php echo htmlspecialchars($row['matricule']); ?>"><?= htmlspecialchars($row['matricule']) ?></option>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="annee_univ">Annee universitaire</label>
                   <select class="form-select form-control" name="annee_univ" id="annee_univ" required>
                     <option value="2021-2022">2021-2022</option>
-                    <option value="2022-2022">2022-2023</option>
+                    <option value="2022-2023">2022-2023</option>
                     <option value="2023-2024">2023-2024</option>
                     <option value="2024-2025">2024-2025</option>
                     <option value="2025-2026">2025-2026</option>
@@ -85,7 +90,7 @@ require_once("../layout/header.php");
                 </div>
                 <div class="form-group">
                   <label for="note">Note</label>
-                  <input type="number" class="form-control" id="note" name="note" step="0.1" required placeholder="Enter la note durant la soutenance">
+                  <input type="number" class="form-control" id="note" name="note" step="0.25" min="0" max="20" required placeholder="Enter la note durant la soutenance" >
                 </div>
                 <div class="form-group">
                   <label for="president">President du jury</label>
@@ -127,7 +132,7 @@ require_once("../layout/header.php");
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-dark">Ajouter</button>
               </div>
             </form>
           </div>
